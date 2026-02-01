@@ -2,8 +2,9 @@ name: Deploy to AWS Lambda
 
 on:
   push:
-    branches:
-      - main   # runs when PR is merged to main
+    branches: [ "master" ]  # for now testing by pushing a commit
+  pull_request:
+    branches: [ "master" ]  # runs when PR is merged to main
 
 jobs:
   deploy:
