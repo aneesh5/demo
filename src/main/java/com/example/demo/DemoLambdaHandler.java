@@ -7,7 +7,7 @@ public class DemoLambdaHandler implements RequestHandler<String, String> {
 
     @Override
     public String handleRequest(String input, Context context) {
-        return "Processed XML: " + input;
+        return "Hello: " + input;
     }
 }
 
