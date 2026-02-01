@@ -1,8 +1,6 @@
 name: Deploy to AWS Lambda
 
 on:
-  push:
-    branches: [ "master" ]  # for now testing by pushing a commit
   pull_request:
     branches: [ "master" ]  # runs when PR is merged to main
 
@@ -36,3 +34,12 @@ jobs:
           aws lambda update-function-code \
             --function-name ${{ secrets.LAMBDA_FUNCTION_NAME }} \
             --zip-file fileb://target/demo-0.0.1-SNAPSHOT.jar
+
+      - name: Publish Lambda version
+        id: publish
+        run: |
+          VERSION=$(aws lambda publish-version \
+            --function-name ${{ secrets.LAMBDA_FUNCTION_NAME }} \
+            --query 'Version' \
+            --output text)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV    
