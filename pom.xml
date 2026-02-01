@@ -6,7 +6,6 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<!-- Spring Boot parent -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -19,16 +18,13 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>demo</name>
-	<description>Spring Boot AWS Lambda</description>
-
 	<properties>
 		<java.version>17</java.version>
 	</properties>
 
 	<dependencies>
 
-		<!-- REQUIRED for @SpringBootApplication -->
+		<!-- Needed for @SpringBootApplication (compile-time) -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
@@ -39,12 +35,6 @@
 			<groupId>com.amazonaws</groupId>
 			<artifactId>aws-lambda-java-core</artifactId>
 			<version>1.2.3</version>
-		</dependency>
-
-		<!-- Logging -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-logging</artifactId>
 		</dependency>
 
 		<!-- Tests -->
@@ -59,17 +49,20 @@
 	<build>
 		<plugins>
 
-			<!-- Creates a FAT JAR (IMPORTANT for Lambda) -->
+			<!-- DO NOT repackage as Spring Boot fat JAR -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<executions>
-					<execution>
-						<goals>
-							<goal>repackage</goal>
-						</goals>
-					</execution>
-				</executions>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+
+			<!-- Create a normal flat JAR -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.3.0</version>
 			</plugin>
 
 		</plugins>
